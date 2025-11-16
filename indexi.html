@@ -85,26 +85,29 @@
 
     <div class="desktop">
         <div class="icon" onclick="document.getElementById('about-window').classList.add('active')">
-            <img class="icon-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Crect fill='%234A8CF0' width='48' height='48' rx='4'/%3E%3Crect fill='%23E0E0E0' x='8' y='12' width='32' height='24'/%3E%3C/svg%3E">
+            <img class="icon-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cdefs%3E%3ClinearGradient id='g1' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%234A8CF0;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%232060C0;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23g1)' width='48' height='48' rx='4'/%3E%3Crect fill='%23E0E0E0' x='8' y='12' width='32' height='24' rx='1'/%3E%3Crect fill='%234A8CF0' x='10' y='14' width='28' height='16'/%3E%3Crect fill='%2360A0F0' x='8' y='34' width='32' height='4' rx='1'/%3E%3C/svg%3E" alt="My Computer">
             <div class="icon-label">My Computer</div>
         </div>
         <div class="icon" onclick="document.getElementById('work-window').classList.add('active')">
-            <img class="icon-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Crect fill='%23FFD700' width='48' height='48'/%3E%3C/svg%3E">
+            <img class="icon-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cdefs%3E%3ClinearGradient id='g2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FFD700;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23FFA500;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23g2)' d='M8,16 L24,8 L40,16 L40,40 L8,40 Z'/%3E%3Cpath fill='%23FFE55C' d='M8,16 L24,8 L40,16 L24,24 Z'/%3E%3Crect fill='%23CC8400' x='20' y='28' width='8' height='12'/%3E%3C/svg%3E" alt="Work">
             <div class="icon-label">Work</div>
         </div>
         <div class="icon" onclick="document.getElementById('contact-window').classList.add('active')">
-            <img class="icon-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Crect fill='%23C0C0C0' width='48' height='48'/%3E%3C/svg%3E">
+            <img class="icon-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cdefs%3E%3ClinearGradient id='g3' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23F0F0F0;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23C0C0C0;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23g3)' x='6' y='12' width='36' height='24' rx='2'/%3E%3Cpath fill='%234A8CF0' d='M6,12 L24,24 L42,12'/%3E%3Cpath fill='none' stroke='%232060C0' stroke-width='2' d='M6,12 L24,24 L42,12'/%3E%3C/svg%3E" alt="Contact">
             <div class="icon-label">Contact</div>
         </div>
         <div class="icon" onclick="document.getElementById('resume-window').classList.add('active')">
-            <img class="icon-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Crect fill='%23FFFFFF' width='48' height='48'/%3E%3C/svg%3E">
+            <img class="icon-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cdefs%3E%3ClinearGradient id='g4' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FFFFFF;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23E0E0E0;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23g4)' d='M12,4 L32,4 L40,12 L40,44 L12,44 Z'/%3E%3Cpath fill='%23B0B0B0' d='M32,4 L32,12 L40,12 Z'/%3E%3Crect fill='%234A8CF0' x='16' y='18' width='16' height='2'/%3E%3Crect fill='%234A8CF0' x='16' y='24' width='16' height='2'/%3E%3Crect fill='%234A8CF0' x='16' y='30' width='12' height='2'/%3E%3C/svg%3E" alt="Resume">
             <div class="icon-label">Resume</div>
         </div>
     </div>
 
     <div id="about-window" class="window" style="width: 680px; top: 15%; left: 20%;">
         <div class="window-title-bar">
-            <div class="window-title-left"><span class="window-title">My Computer - About Me</span></div>
+            <div class="window-title-left">
+                <img style="width:16px;height:16px;" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect fill='%234A8CF0' width='16' height='16'/%3E%3C/svg%3E">
+                <span class="window-title">My Computer - About Me</span>
+            </div>
             <div class="window-buttons">
                 <div class="window-button">_</div>
                 <div class="window-button">□</div>
