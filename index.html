@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amrita Das - Portfolio</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Tahoma', sans-serif; overflow: hidden; width: 100vw; height: 100vh; background: linear-gradient(180deg, #5EADF2 0%, #2E7BC4 100%); position: relative; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.5); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+        .overlay.hidden { display: none; }
+        .welcome-dialog { width: 550px; max-width: 90vw; background: #ECE9D8; border-radius: 8px 8px 0 0; box-shadow: 0 0 0 1px rgba(0,0,0,0.2), 4px 4px 8px rgba(0,0,0,0.5); display: flex; flex-direction: column; }
+        .welcome-title-bar { background: linear-gradient(180deg, #3F8CF3 0%, #2870D9 50%, #1657C6 100%); padding: 4px 8px; display: flex; justify-content: space-between; align-items: center; border-radius: 8px 8px 0 0; }
+        .welcome-title-left { display: flex; align-items: center; gap: 5px; }
+        .welcome-title { color: white; font-size: 11px; font-weight: bold; text-shadow: 1px 1px 1px rgba(0,0,0,0.5); }
+        .welcome-content { padding: 20px; background: #ECE9D8; }
+        .welcome-text { font-size: 11px; line-height: 1.7; color: #000; margin-bottom: 20px; }
+        .welcome-text p { margin-bottom: 12px; }
+        .exit-button { display: inline-block; padding: 8px 30px; background: linear-gradient(180deg, #F7FBFF 0%, #D8E9F7 50%, #B8D7F0 50%, #98C5E8 100%); color: #000; text-decoration: none; border: 1px solid; border-color: #FFFFFF #003C74 #003C74 #FFFFFF; border-radius: 3px; font-weight: bold; cursor: pointer; font-size: 11px; }
+        .button-container { display: flex; gap: 10px; justify-content: center; }
+        .continue-button { background: linear-gradient(180deg, #3FA142 0%, #61C164 50%, #4FA152 50%, #3E8B41 100%); color: white; border-color: #FFFFFF #1B5E1F #1B5E1F #FFFFFF; }
+        .window-button { width: 21px; height: 20px; background: linear-gradient(180deg, #F7FBFF 0%, #D8E9F7 50%, #B8D7F0 50%, #98C5E8 100%); border: 1px solid; border-color: #FFFFFF #003C74 #003C74 #FFFFFF; border-radius: 3px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; color: #000; }
+        .window-close { background: linear-gradient(180deg, #FF9C9C 0%, #FF5A5A 50%, #E83E3E 50%, #D42020 100%); border-color: #FFE0E0 #8B0000 #8B0000 #FFE0E0; color: white; }
+        .window-buttons { display: flex; gap: 2px; }
+        .desktop { position: absolute; top: 10px; left: 10px; display: flex; flex-direction: column; gap: 5px; z-index: 1; }
+        .icon { display: flex; flex-direction: column; align-items: center; width: 75px; cursor: pointer; padding: 5px; border: 1px solid transparent; }
+        .icon:hover { background: rgba(51, 94, 168, 0.3); border: 1px dotted #335EA8; }
+        .icon-img { width: 48px; height: 48px; margin-bottom: 4px; filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.3)); }
+        .icon-label { color: white; font-size: 11px; text-align: center; text-shadow: 1px 1px 2px rgba(0,0,0,0.9); line-height: 1.2; }
+        .window { position: fixed; background: #ECE9D8; border-radius: 8px 8px 0 0; box-shadow: 0 0 0 1px rgba(0,0,0,0.2), 4px 4px 8px rgba(0,0,0,0.5); z-index: 1000; display: none; flex-direction: column; min-width: 400px; max-width: 90vw; max-height: 85vh; }
+        .window.active { display: flex; }
+        .window-title-bar { background: linear-gradient(180deg, #3F8CF3 0%, #2870D9 50%, #1657C6 100%); padding: 4px 8px; display: flex; justify-content: space-between; align-items: center; cursor: move; border-radius: 8px 8px 0 0; }
+        .window-title-left { display: flex; align-items: center; gap: 5px; }
+        .window-title { color: white; font-size: 11px; font-weight: bold; text-shadow: 1px 1px 1px rgba(0,0,0,0.5); }
+        .window-content { padding: 15px; overflow-y: auto; background: #ECE9D8; flex: 1; }
+        .about-container { display: flex; gap: 20px; align-items: flex-start; }
+        .about-image { flex-shrink: 0; width: 180px; height: 180px; border: 3px solid #FFFFFF; box-shadow: 0 0 0 1px #7F7F7F, 2px 2px 4px rgba(0,0,0,0.3); background: white; }
+        .about-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .about-text h1 { font-size: 22px; color: #003399; margin-bottom: 12px; font-weight: bold; }
+        .about-text p { font-size: 11px; line-height: 1.6; margin-bottom: 10px; color: #000; }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; padding: 5px; }
+        .project-item { display: flex; flex-direction: column; align-items: center; padding: 12px 8px; background: #ECE9D8; border: 1px solid #ACA899; cursor: pointer; text-decoration: none; }
+        .project-item:hover { background: #FFF8DC; border: 1px solid #0831D9; }
+        .project-icon { font-size: 40px; margin-bottom: 8px; }
+        .project-name { font-size: 10px; text-align: center; color: #000; line-height: 1.3; }
+        .contact-content, .resume-content { font-size: 11px; line-height: 1.8; color: #000; }
+        .contact-content h2, .resume-content h2 { font-size: 14px; margin-bottom: 12px; color: #003399; font-weight: bold; }
+        .contact-content a { color: #0000EE; text-decoration: underline; }
+        .resume-content { text-align: center; padding: 20px; }
+        .resume-icon { font-size: 56px; margin-bottom: 15px; }
+        .download-btn { display: inline-block; padding: 6px 25px; background: linear-gradient(180deg, #F7FBFF 0%, #D8E9F7 50%, #B8D7F0 50%, #98C5E8 100%); color: #000; text-decoration: none; border: 1px solid; border-color: #FFFFFF #003C74 #003C74 #FFFFFF; border-radius: 3px; cursor: pointer; font-size: 11px; }
+        .taskbar { position: fixed; bottom: 0; left: 0; right: 0; height: 30px; background: linear-gradient(180deg, #3F8CF3 0%, #2870D9 50%, #1657C6 100%); border-top: 1px solid #5EADF2; display: flex; align-items: center; justify-content: space-between; z-index: 999; }
+        .start-button { height: 100%; background: linear-gradient(90deg, #3FA142 0%, #61C164 100%); border: none; border-right: 1px solid #1B5E1F; border-radius: 0 6px 0 0; padding: 0 12px 0 8px; color: white; font-size: 11px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+        .taskbar-right { display: flex; align-items: center; height: 100%; padding: 0 8px; gap: 8px; }
+        .system-tray { display: flex; align-items: center; gap: 6px; padding: 2px 8px; background: rgba(0,0,0,0.1); border: 1px solid; border-color: #003C74 #FFFFFF #FFFFFF #003C74; height: 22px; border-radius: 2px; }
+        .clock { color: white; font-size: 11px; text-shadow: 1px 1px 1px rgba(0,0,0,0.5); }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="welcomeOverlay">
+        <div class="welcome-dialog">
+            <div class="welcome-title-bar">
+                <div class="welcome-title-left">
+                    <span class="welcome-title">Welcome to Windows XP</span>
+                </div>
+                <div class="window-buttons">
+                    <div class="window-button window-close" onclick="document.getElementById('welcomeOverlay').classList.add('hidden')">×</div>
+                </div>
+            </div>
+            <div class="welcome-content">
+                <div class="welcome-text">
+                    <p><strong>Hey there!</strong></p>
+                    <p>Welcome to my Windows XP experiment. This classic OS came out the year I was born, and I'm really loving the retro pixel vibe right now.</p>
+                    <p>I built this from scratch using some good old HTML, CSS and JS, and I hope you enjoy it as much as I did making it.</p>
+                    <p>Go ahead and click the icons to explore my work, about me and to contact me.</p>
+                    <p>Also, if this blast from the past isn't your style, just hit the button below to see my main portfolio!</p>
+                </div>
+                <div class="button-container">
+                    <button class="exit-button continue-button" onclick="document.getElementById('welcomeOverlay').classList.add('hidden')">Continue Exploring</button>
+                    <a href="https://amritadas.framer.website/" class="exit-button">Exit XP Mode</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="desktop">
+        <div class="icon" onclick="document.getElementById('about-window').classList.add('active')">
+            <img class="icon-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cdefs%3E%3ClinearGradient id='g1' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%234A8CF0;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%232060C0;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23g1)' width='48' height='48' rx='4'/%3E%3Crect fill='%23E0E0E0' x='8' y='12' width='32' height='24' rx='1'/%3E%3Crect fill='%234A8CF0' x='10' y='14' width='28' height='16'/%3E%3Crect fill='%2360A0F0' x='8' y='34' width='32' height='4' rx='1'/%3E%3C/svg%3E" alt="My Computer">
+            <div class="icon-label">My Computer</div>
+        </div>
+        <div class="icon" onclick="document.getElementById('work-window').classList.add('active')">
+            <img class="icon-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cdefs%3E%3ClinearGradient id='g2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FFD700;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23FFA500;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23g2)' d='M8,16 L24,8 L40,16 L40,40 L8,40 Z'/%3E%3Cpath fill='%23FFE55C' d='M8,16 L24,8 L40,16 L24,24 Z'/%3E%3Crect fill='%23CC8400' x='20' y='28' width='8' height='12'/%3E%3C/svg%3E" alt="Work">
+            <div class="icon-label">Work</div>
+        </div>
+        <div class="icon" onclick="document.getElementById('contact-window').classList.add('active')">
+            <img class="icon-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cdefs%3E%3ClinearGradient id='g3' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23F0F0F0;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23C0C0C0;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23g3)' x='6' y='12' width='36' height='24' rx='2'/%3E%3Cpath fill='%234A8CF0' d='M6,12 L24,24 L42,12'/%3E%3Cpath fill='none' stroke='%232060C0' stroke-width='2' d='M6,12 L24,24 L42,12'/%3E%3C/svg%3E" alt="Contact">
+            <div class="icon-label">Contact</div>
+        </div>
+        <div class="icon" onclick="document.getElementById('resume-window').classList.add('active')">
+            <img class="icon-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cdefs%3E%3ClinearGradient id='g4' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FFFFFF;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23E0E0E0;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23g4)' d='M12,4 L32,4 L40,12 L40,44 L12,44 Z'/%3E%3Cpath fill='%23B0B0B0' d='M32,4 L32,12 L40,12 Z'/%3E%3Crect fill='%234A8CF0' x='16' y='18' width='16' height='2'/%3E%3Crect fill='%234A8CF0' x='16' y='24' width='16' height='2'/%3E%3Crect fill='%234A8CF0' x='16' y='30' width='12' height='2'/%3E%3C/svg%3E" alt="Resume">
+            <div class="icon-label">Resume</div>
+        </div>
+    </div>
+
+    <div id="about-window" class="window" style="width: 680px; top: 15%; left: 20%;">
+        <div class="window-title-bar">
+            <div class="window-title-left">
+                <img style="width:16px;height:16px;" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect fill='%234A8CF0' width='16' height='16'/%3E%3C/svg%3E">
+                <span class="window-title">My Computer - About Me</span>
+            </div>
+            <div class="window-buttons">
+                <div class="window-button">_</div>
+                <div class="window-button">□</div>
+                <div class="window-button window-close" onclick="document.getElementById('about-window').classList.remove('active')">×</div>
+            </div>
+        </div>
+        <div class="window-content">
+            <div class="about-container">
+                <div class="about-image">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Crect fill='%23E8E8E8' width='180' height='180'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%234A8CF0' font-size='64'%3E👩‍💻%3C/text%3E%3C/svg%3E">
+                </div>
+                <div class="about-text">
+                    <h1>Howdy, I'm Amrita!</h1>
+                    <p>I grew up in Bangalore surrounded by gadgets, craft supplies and endless curiosity, so it's no surprise I landed somewhere between tech and design.</p>
+                    <p>Engineering came first, then a very bold cold email landed me at IDC, IIT Bombay, where I discovered I actually love HCI. That took me to NID and then Samsung Research, where I explore how AI can shape visual experiences.</p>
+                    <p>My journey runs on curiosity, hibiscus tea and far too many all nighters. I like diving into the unknown, asking too many questions and turning chaos into clarity.</p>
+                    <p>When I'm not designing, I'm clicking photos, travelling or eating something great.</p>
+                    <p>I'm still learning and growing and I'm really glad you're here.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="work-window" class="window" style="width: 600px; top: 12%; left: 25%;">
+        <div class="window-title-bar">
+            <div class="window-title-left"><span class="window-title">Work - Projects</span></div>
+            <div class="window-buttons">
+                <div class="window-button">_</div>
+                <div class="window-button">□</div>
+                <div class="window-button window-close" onclick="document.getElementById('work-window').classList.remove('active')">×</div>
+            </div>
+        </div>
+        <div class="window-content">
+            <div class="projects-grid">
+                <a href="https://amritadas.framer.website/projects/samsung" target="_blank" class="project-item">
+                    <div class="project-icon">🌸</div>
+                    <div class="project-name">Internship @Samsung Research</div>
+                </a>
+                <a href="https://amritadas.framer.website/projects/iitb-hci-research" target="_blank" class="project-item">
+                    <div class="project-icon">🌺</div>
+                    <div class="project-name">Internship @IIT Bombay</div>
+                </a>
+                <a href="https://amritadas.framer.website/projects/rupeebook" target="_blank" class="project-item">
+                    <div class="project-icon">🌼</div>
+                    <div class="project-name">Rupeebook</div>
+                </a>
+                <a href="https://www.behance.net/gallery/210745327/Aura-Empowering-PCOS-patients" target="_blank" class="project-item">
+                    <div class="project-icon">🌻</div>
+                    <div class="project-name">Aura - PCOS Support</div>
+                </a>
+                <a href="https://amritadas.framer.website/projects/dermadetect" target="_blank" class="project-item">
+                    <div class="project-icon">🌷</div>
+                    <div class="project-name">AR + AI for Skin Cancer</div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="contact-window" class="window" style="width: 460px; top: 18%; left: 30%;">
+        <div class="window-title-bar">
+            <div class="window-title-left"><span class="window-title">Contact Me</span></div>
+            <div class="window-buttons">
+                <div class="window-button">_</div>
+                <div class="window-button">□</div>
+                <div class="window-button window-close" onclick="document.getElementById('contact-window').classList.remove('active')">×</div>
+            </div>
+        </div>
+        <div class="window-content">
+            <div class="contact-content">
+                <h2>Get In Touch</h2>
+                <p><strong>Email:</strong> <a href="mailto:amritadas1302@gmail.com">amritadas1302@gmail.com</a></p>
+                <p><strong>Phone:</strong> +91 9108478563</p>
+                <p style="margin-top: 12px;"><strong>Socials:</strong></p>
+                <p><a href="https://www.linkedin.com/in/amrita-das-464149197/" target="_blank">LinkedIn</a> | <a href="https://www.behance.net/amritadas8" target="_blank">Behance</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="resume-window" class="window" style="width: 420px; top: 20%; left: 35%;">
+        <div class="window-title-bar">
+            <div class="window-title-left"><span class="window-title">Resume</span></div>
+            <div class="window-buttons">
+                <div class="window-button">_</div>
+                <div class="window-button">□</div>
+                <div class="window-button window-close" onclick="document.getElementById('resume-window').classList.remove('active')">×</div>
+            </div>
+        </div>
+        <div class="window-content">
+            <div class="resume-content">
+                <div class="resume-icon">📄</div>
+                <h2>Amrita_Das_Resume.pdf</h2><br>
+                <a href="https://drive.google.com/file/d/1Bo8vzj4t1BT1nnXPX61IxHumfLB1e4zb/view?usp=sharing" target="_blank" class="download-btn">View Resume</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="taskbar">
+        <button class="start-button"><span>⊞</span> start</button>
+        <div class="taskbar-right">
+            <div class="system-tray"><span>🔊</span><span>🌐</span></div>
+            <div class="clock" id="clock"></div>
+        </div>
+    </div>
+
+    <script>
+        setInterval(() => {
+            const now = new Date();
+            const h = now.getHours() % 12 || 12;
+            const m = now.getMinutes().toString().padStart(2, '0');
+            const ap = now.getHours() >= 12 ? 'PM' : 'AM';
+            document.getElementById('clock').textContent = h + ':' + m + ' ' + ap;
+        }, 1000);
+    </script>
+</body>
+</html>
